@@ -446,7 +446,7 @@ function addPet() {
         </div>
       </div>
       <div class="field">
-        <label>Raça</label>
+        <label>Raça <span class="req">*</span></label>
         <input type="text" id="pet-${num}-raca" placeholder="Ex: Golden Retriever">
       </div>
       <div class="field-row">
@@ -593,6 +593,7 @@ function coletarPets() {
   blocks.forEach((block) => {
     const id = block.id.replace('pet-', '');
     const nome = document.getElementById(`pet-${id}-nome`)?.value?.trim();
+    const raca = document.getElementById(`pet-${id}-raca`)?.value?.trim();
     if (!nome) return;
     pets.push({
       nome,
@@ -643,6 +644,12 @@ async function enviarCadastro() {
   const semPorte = pets.find(p => !p.porte);
   if (semPorte) {
     errorMsg.textContent = `Selecione o porte do pet "${semPorte.nome}".`;
+    errorMsg.style.display = 'block';
+    return;
+  }
+  const semRaca = pets.find(p => !p.raca);
+  if (semRaca) {
+    errorMsg.textContent = `Informe a raça do pet "${semRaca.nome}".`;
     errorMsg.style.display = 'block';
     return;
   }
